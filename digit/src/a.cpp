@@ -9,14 +9,6 @@
 #include <cstring>
 using namespace std;
 using matrix = vector<vector<int>>;
-/*void A_h1(const vector<vector<int> > &start, const vector<vector<int> >
-&target);
-void A_h2(const vector<vector<int> > &start, const vector<vector<int> >
-&target);
-void IDA_h1(const vector<vector<int> > &start, const vector<vector<int> >
-&target);
-void IDA_h2(const vector<vector<int> > &start, const vector<vector<int> >
-&target);*/
 #include <map>
 
 class State{
@@ -212,20 +204,12 @@ class Solver{
         HQ.push(Current);
         Parents[Current] = {NIL,1};
         int count = 0;
-        //std::cerr << "OK "<< std::endl;
         while(!HQ.empty()){
             auto S = HQ.top();
             HQ.pop();
-            //if(count%5==0)
-              //  cerr << "\33[2K\r count = " << count << endl;
             visited.emplace(S.zip);
             for(auto P:Actions(S)){
-                //cerr << "OK" <<endl;
                 if(visited.find(P.zip)==visited.end()){
-                    //没访问过
-                    //不管在不在HQ都当不在.因为如果在的话,等它出队的时候也是出较小的那个.
-               //cerr << count ++ << "|" << endl;     P.h(Goal);
-               //cerr << P.print() << endl;
                     P.h(Goal);
                     Parents[P] = {S,P.op};
                     if(P==Goal){
@@ -239,9 +223,7 @@ class Solver{
                     HQ.push(P);
                 }
             }
-            //cerr << "end" << endl;
         }
-        cerr << "OK" << endl;
         return "";
     }
     const int infty = 10000000;
@@ -428,21 +410,12 @@ class Solver2:public Solver{
         Current.h(Goal);
         HQ.push(Current);
         Parents[Current] = {NIL,1};
-        //std::cerr << "OK "<< std::endl;
         while(!HQ.empty()){
             auto S = HQ.top();
             HQ.pop();
-            //if(count%5==0)
-              //  cerr << "\33[2K\r count = " << count << endl;
             visited.emplace(S.zip);
             for(auto P:Actions(S)){
-                //cerr << "OK" <<endl;
                 if(visited.find(P.zip)==visited.end()){
-                    //count ++;
-                    //没访问过
-                    //不管在不在HQ都当不在.因为如果在的话,等它出队的时候也是出较小的那个.
-               //cerr << count ++ << "|" << endl;     P.h(Goal);
-               //cerr << P.print() << endl;
                     P.heu = improvedH(P);
                     Parents[P] = {S,P.op};
                     if(P==Goal){
@@ -505,20 +478,6 @@ void IDA_h2(const vector<vector<int> > &start, const vector<vector<int> >
 }
 
 int main(int argc,const char** argv){
-    /*matrix Start = {
-        {0,2, 3, 4, 5},
-        {1,7 ,8, 9, 10},
-        {6 ,12 ,13 ,14, 11},
-        {16 ,17, 18, 19, -15},
-        {21 ,22, 23 ,24 ,20},
-    };
-    matrix goal = {
-        {1 ,2 ,3 ,4 ,5},
-        {6 ,7 ,8 ,9 ,10},
-        {11 ,12 ,13 ,19 ,14},
-        {16 ,17 ,18 ,24 ,-15},
-        {21 ,22 ,23 ,20 ,0}
-    };*/
     vector<string> S = {};
     for(int i=0;i<=11;i++){
         if(i>=10)
